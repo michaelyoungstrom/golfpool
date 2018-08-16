@@ -1,0 +1,36 @@
+### Python artifacts
+*.pyc
+
+### Editor and IDE artifacts
+*~
+*.swp
+*.orig
+/nbproject
+.idea/
+.redcar/
+codekit-config.json
+.pycharm_helpers/
+/_mac/*
+/IntelliLang.xml
+/conda_packages.xml
+/databaseSettings.xml
+/diff.xml
+/debugger.xml
+/editor.xml
+/ide.general.xml
+/inspection/Default.xml
+/other.xml
+/packages.xml
+/web-browsers.xml
+
+### OS X artifacts
+*.DS_Store
+.AppleDouble
+:2e_*
+:2e#
+
+### Database
+db.sqlite3
+
+### Secrets
+settings_secret.py

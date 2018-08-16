@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br/>
+<h1>Player Selection</h1>
+<br/>
+
+<form method="POST" action="{% url 'players:submit' tournament.id %}">
+    {% csrf_token %}
+    {% for playerPoolList in player_events_group_list %}
+
+        <h4>Pool {{ forloop.counter }}</h4>
+
+        <select class="custom-select" name="pool_{{ forloop.counter }}">
+            {% for playerEvent in playerPoolList %}
+                {% if playerEvent in user_player_events %}
+                    <option selected value="{{ playerEvent.id }}">{{ playerEvent.player }}</option>
+                {% else %}
+                    <option value="{{ playerEvent.id }}">{{ playerEvent.player }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <br/>
+        <br/>
+
+    {% endfor %}
+<br/>
+<input class="btn btn-primary" type="submit" value="Submit"/>
+</form>
+<br/>
+{% endblock %}
