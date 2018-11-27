@@ -15,7 +15,6 @@ def player_selection(request, tournament_key):
     player_events_group_list = []
     for pool in range(1, tournament.number_of_pools + 1):
         player_events_group_list.append(PlayerEvent.objects.filter(tournament=tournament, pool=pool))
-    print(user_player_events)
     return render(
         request,
         'players/players_selection.html',

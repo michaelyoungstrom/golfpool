@@ -14,10 +14,10 @@ class PlayerEvent(models.Model):
     tournament = models.ForeignKey(Tournament)
     player = models.ForeignKey(Player)
     pool = models.IntegerField()
-    round_one_to_par = models.IntegerField(blank=True, null=True)
-    round_two_to_par = models.IntegerField(blank=True, null=True)
-    round_three_to_par = models.IntegerField(blank=True, null=True)
-    round_four_to_par = models.IntegerField(blank=True, null=True)
+    round_one_to_par = models.IntegerField(default=0)
+    round_two_to_par = models.IntegerField(default=0)
+    round_three_to_par = models.IntegerField(default=0)
+    round_four_to_par = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.tournament) + ' ' + str(self.player)
@@ -26,4 +26,8 @@ class UserEvent(models.Model):
     user = models.ForeignKey(User)
     tournament = models.ForeignKey(Tournament)
     player_events = models.ManyToManyField(PlayerEvent)
+    round_one_to_par = models.IntegerField(default=0)
+    round_two_to_par = models.IntegerField(default=0)
+    round_three_to_par = models.IntegerField(default=0)
+    round_four_to_par = models.IntegerField(default=0)
     total_score_to_par = models.IntegerField(default=0)
