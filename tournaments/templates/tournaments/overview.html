@@ -23,11 +23,11 @@
     {% else %}
         <tr>
     {% endif %}
-    {% ifchanged user_event.total_score_to_par %}
-      <th scope="row">{{ forloop.counter }}</th>
+    {% if user_event.position %}
+      <th scope="row">{{ user_event.position }}</th>
     {% else %}
       <th scope="row"></th>
-    {% endifchanged %}
+    {% endif %}
       <td>{{ user_event.user.last_name }}, {{ user_event.user.first_name }}</td>
       {% if user_event.total_score_to_par == 0 %}
           <td>E</td>

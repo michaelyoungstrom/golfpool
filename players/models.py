@@ -25,6 +25,7 @@ class PlayerEvent(models.Model):
 class UserEvent(models.Model):
     user = models.ForeignKey(User)
     tournament = models.ForeignKey(Tournament)
+    position = models.IntegerField(blank=True, null=True)
     player_events = models.ManyToManyField(PlayerEvent)
     round_one_to_par = models.IntegerField(default=0)
     round_two_to_par = models.IntegerField(default=0)

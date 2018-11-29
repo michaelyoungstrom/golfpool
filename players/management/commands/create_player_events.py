@@ -2,14 +2,17 @@ import click
 import csv
 
 from django.core.management.base import BaseCommand
-from players.models import Player, PlayerEvent
+from players.models import Player, PlayerEvent, UserEvent
 from tournaments.models import Tournament
 
 """
 Parses a csv file to add players to player events for a tournament.
 
-Assumes a csv file with the format of:
-    tournament name, tournament year, player first name, player last name, pool number
+Assumes a csv file with the following format (one line):
+    tournament name, tournament year, player first name, player last name, pool number,
+    round one score (optional), round two score (optional), round 3 score (optional), round 4 score (optional)
+
+Additionally, this file will update additional values in the csv row if you choose to add score for each round
 """
 class Command(BaseCommand):
     help = 'Adds player events to database'
@@ -91,4 +94,4 @@ class Command(BaseCommand):
 
                 player_event.save()
 
-            self.stdout.write(self.style.SUCCESS("Successfully added player events"))
+        self.stdout.write(self.style.SUCCESS("Successfully added player events"))
