@@ -4,8 +4,7 @@ from .models import Tournament
 from players.models import PlayerEvent, UserEvent
 
 def home(request):
-    tournaments = Tournament.objects.order_by('start_date')
-    print(request.user)
+    tournaments = Tournament.objects.order_by('-start_date')
     return render(request, 'tournaments/home.html', {'tournaments': tournaments})
 
 def overview(request, pk):

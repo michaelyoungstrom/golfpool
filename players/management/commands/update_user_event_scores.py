@@ -56,10 +56,10 @@ class Command(BaseCommand):
             event.round_three_to_par = round_three_score
             event.round_four_to_par = round_four_score
             event.total_score_to_par = round_one_score + round_two_score + round_three_score + round_four_score
-            # event.save()
+            event.save()
 
         last_score = None
-        for position_counter, event in enumerate(UserEvent.objects.filter(tournament=tournament).order_by('total_score_to_par'), 1):
+        for position_counter, event in enumerate(user_events.order_by('total_score_to_par'), 1):
             current_score = event.total_score_to_par
             if current_score == last_score:
                 event.position = last_position

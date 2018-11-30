@@ -51,20 +51,20 @@ class Command(BaseCommand):
                     player = Player.objects.get(first_name=first_name, last_name=last_name)
                 except Player.DoesNotExist:
                     raise ValueError(
-                        "Player not found. Please make sure the first and last name match an entry in the Players database."
+                        "Player {} {} not found. Please make sure the first and last name match an entry in the Players database.".format(first_name, last_name)
                     )
 
                 try:
                     tournament = Tournament.objects.get(name=tournament_name, start_date__year=tournament_year)
                 except Tournament.DoesNotExist:
                     raise ValueError(
-                        "Tournament not found. Please make sure there exists an entry in Tournaments with the desired name and year"
+                        "Tournament {} {} not found. Please make sure there exists an entry in Tournaments with the desired name and year".format(tournament_name, tournament_year)
                     )
 
                 if int(pool) > tournament.number_of_pools:
                     raise ValueError(
-                        "Invalid pool number. Make sure the tournament has a valid number of pools, and that this "
-                        "pool number is within that range."
+                        "Invalid pool number {}. Make sure the tournament has a valid number of pools, and that this "
+                        "pool number is within that range.".format(int(pool))
                     )
 
                 try:

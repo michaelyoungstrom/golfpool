@@ -12,12 +12,16 @@
 <h3>Tournaments</h3>
 <hr>
 {% for tournament in tournaments %}
-
-<a href="{% url 'tournaments:overview' tournament.id %}">{{ tournament.name }}: {{ tournament.golf_course }}</a>
+{% ifchanged tournament.start_date_year %}
+<h4>{{ tournament.start_date_year }}</h4>
 <br/>
+{% endifchanged %}
+
+<h4><a href="{% url 'tournaments:overview' tournament.id %}">{{ tournament.name }}: {{ tournament.golf_course }}</a></h4>
 <a>Start Date: {{ tournament.start_date }}</a>
 <br/>
 <a>Entry fee: ${{ tournament.entry_fee }}</a>
+<br/>
 <br/>
 
 {% endfor %}

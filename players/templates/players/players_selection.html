@@ -6,6 +6,10 @@
 <h1>Player Selection</h1>
 <br/>
 
+{% if player_selection_error %}
+<p><font color="red">{{ player_selection_error }}</font></p>
+{% endif %}
+
 <form method="POST" action="{% url 'players:submit' tournament.id %}">
     {% csrf_token %}
     {% for playerPoolList in player_events_group_list %}
