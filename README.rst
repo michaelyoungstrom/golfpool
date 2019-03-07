@@ -1,6 +1,8 @@
-GolfPool
+GolfPool [Under Development]
 ========
 Golfpool is a django application to help run a fantasy style golf tournament with friends.
+
+Please note I am still working on tidying this up. This is by no means a finished project.
 
 Format
 ======
