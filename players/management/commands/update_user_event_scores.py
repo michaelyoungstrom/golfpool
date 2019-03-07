@@ -61,7 +61,7 @@ class Command(BaseCommand):
         last_score = None
         for position_counter, event in enumerate(user_events.order_by('total_score_to_par'), 1):
             current_score = event.total_score_to_par
-            if current_score == last_score:
+            if last_score and current_score == last_score:
                 event.position = last_position
             else:
                 event.position = position_counter
