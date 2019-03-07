@@ -12,12 +12,11 @@ def signup(request):
         password_verify = request.POST['password_verify']
 
         if not email or not username or not first_name or not last_name or not password or not password_verify:
-            return render(request, 'accounts/signup.html', {'error': 'Missing field: Please make sure all fields are filled'})
-
+            return render(request, 'accounts/signup.html', {'error': 'Missing field. Please make sure everything has been filled.'})
         if password == password_verify:
             try:
                 User.objects.get(username=username)
-                return render(request, 'accounts/signup.html', {'error': 'There is already a user with that username'})
+                return render(request, 'accounts/signup.html', {'error': 'There is already a user with that username.'})
             except User.DoesNotExist:
                 user = User.objects.create_user(
                     email=email,
@@ -29,7 +28,7 @@ def signup(request):
                 login(request, user)
                 return redirect('home')
         else:
-            return render(request, 'accounts/signup.html', {'error': 'Your password verification did not match'})
+            return render(request, 'accounts/signup.html', {'error': 'Your password verification did not match.'})
     else:
         return render(request, 'accounts/signup.html')
 
