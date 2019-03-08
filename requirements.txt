@@ -1,4 +1,5 @@
 beautifulsoup4==4.7.1
+Click==7.0
 Django==1.11
 pytz==2018.4
 requests==2.21.0

@@ -39,8 +39,7 @@ class Command(BaseCommand):
             for row in csv_reader:
                 tournament_name = row[0]
                 tournament_year = row[1]
-                first_name = row[2]
-                last_name = row[3]
+                player_id = row[2]
                 pool = row[4]
                 round_one_to_par = self.get_round_score(row, 5)
                 round_two_to_par = self.get_round_score(row, 6)
@@ -48,10 +47,10 @@ class Command(BaseCommand):
                 round_four_to_par = self.get_round_score(row, 8)
 
                 try:
-                    player = Player.objects.get(first_name=first_name, last_name=last_name)
+                    player = Player.objects.get(player_id=player_id)
                 except Player.DoesNotExist:
                     raise ValueError(
-                        "Player {} {} not found. Please make sure the first and last name match an entry in the Players database.".format(first_name, last_name)
+                        "Player with id: {} not found. Please make sure the first and last name match an entry in the Players database.".format(player_id)
                     )
 
                 try:

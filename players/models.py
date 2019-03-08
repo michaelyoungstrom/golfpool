@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from tournaments.models import Tournament
 
 class Player(models.Model):
+    player_id = models.IntegerField(unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     country = models.CharField(max_length=50, blank=True)
