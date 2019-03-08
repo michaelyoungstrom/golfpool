@@ -20,31 +20,29 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('csv_file', help="Relative path to csv file containing player event data")
 
-    def get_round_score(self, csv_row, num):
+    def get_round_score(self, total_score, par):
         """
-        Get value of csv_row at num, or None if it doesn't exist
+        Takes in a total score for a round and returns its relative score to par.
         """
         try:
-            score = csv_row[num]
+            total_score_int = int(total_score)
         except:
-            score = None
+            # Round isn't complete yet or they missed a cut/withdrew/etc
+            return None
 
-        return score
+        return score - par
 
     def handle(self, *args, **options):
         csv_file = options['csv_file']
-
         with open(csv_file) as csv_file_object:
             csv_reader = csv.reader(csv_file_object, delimiter=',')
             for row in csv_reader:
-                tournament_name = row[0]
-                tournament_year = row[1]
-                player_id = row[2]
-                pool = row[4]
-                round_one_to_par = self.get_round_score(row, 5)
-                round_two_to_par = self.get_round_score(row, 6)
-                round_three_to_par = self.get_round_score(row, 7)
-                round_four_to_par = self.get_round_score(row, 8)
+                tournament_id = row[0]
+                player_id = row[1]
+                round_one_total_score = row[2]
+                round_two_total_score = row[3]
+                round_three_total_score = row[4]
+                round_four_total_score = row[5]
 
                 try:
                     player = Player.objects.get(player_id=player_id)
@@ -54,7 +52,7 @@ class Command(BaseCommand):
                     )
 
                 try:
-                    tournament = Tournament.objects.get(name=tournament_name, start_date__year=tournament_year)
+                    tournament = Tournament.objects.get(tournament_id=tournament_id)
                 except Tournament.DoesNotExist:
                     raise ValueError(
                         "Tournament {} {} not found. Please make sure there exists an entry in Tournaments with the desired name and year".format(tournament_name, tournament_year)
@@ -78,6 +76,12 @@ class Command(BaseCommand):
                         player=player,
                         pool=pool
                     )
+
+                par = tournament.par
+                round_one_to_par = self.get_relative_score(round_one_total_score, par)
+                round_two_to_par = self.get_relative_score(round_two_total_score, par)
+                round_three_to_par = self.get_relative_score(round_three_total_score, par)
+                round_four_to_par = self.get_relative_score(round_four_total_score, par)
 
                 if round_one_to_par:
                     player_event.round_one_to_par=round_one_to_par

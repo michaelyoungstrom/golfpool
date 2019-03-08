@@ -9,8 +9,8 @@ This script provides methods that pull data from ESPN and parses it into
 a format that can be used with this application. It makes some assumptions
 based on the UI which may be subject to change in the future.
 """
-def get_latest_tournament_data():
-    response = requests.get("http://www.espn.com/golf/leaderboard")
+def get_latest_tournament_data(tournament_id):
+    response = requests.get("http://www.espn.com/golf/leaderboard/_/tournamentId/{}".format(tournament_id))
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, 'html.parser')
         tournament_name = soup.find("h1", "headline__h1 Leaderboard__Event__Title").text
@@ -22,14 +22,19 @@ def get_latest_tournament_data():
         with io.open("testing.csv", "w") as csv_file:
             for row in table_rows:
                 player = row.contents[1].text
+                total_to_par = row.contents[2].text
+                today_to_par = row.contents[3].text
+                holes_played_today = row.contents[4].text
                 first = row.contents[5].text
                 second = row.contents[6].text
                 third = row.contents[7].text
                 fourth = row.contents[8].text
-                csv_file.write(u"{},{},{},{},{},{},{}\n".format(
-                    tournament_name,
-                    tournament_year,
+                csv_file.write(u"{},{},{},{},{},{},{},{},{}\n".format(
+                    tournament_id,
                     player,
+                    total_to_par,
+                    today_to_par,
+                    holes_played_today,
                     first,
                     second,
                     third,
@@ -53,12 +58,13 @@ def get_all_golfers():
             country = player.contents[1].text
 
 @click.command()
-@click.option('--datatype', type=click.Choice(['latest_tournament', 'players']), help='Method to run for pulling ESPN data.')
-def main(datatype):
+@click.option('--datatype', type=click.Choice(['tournament', 'players']), help='Method to run for pulling ESPN data.')
+@click.option('--id', type=int, help='Tournament id')
+def main(datatype, id):
     if datatype == "players":
         get_all_golfers()
-    elif datatype == "latest_tournament":
-        get_latest_tournament_data()
+    elif datatype == "tournament":
+        get_latest_tournament_data(id)
     else:
         raise Exception("Please provide a valid datatype to pull.")
 
