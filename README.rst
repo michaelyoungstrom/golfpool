@@ -12,4 +12,4 @@ the lowest **n** scores (where n is a varying number based on the tournament) wi
 added for each tournament round, and the user with the lowest score wins.
 
 Currently, scoring updates are done manually via management commands. But the goal is to
-eventually pull data directly from PGA's website.
+eventually pull data directly from ESPN.
