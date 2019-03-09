@@ -5,7 +5,6 @@ class Tournament(models.Model):
     name = models.CharField(max_length=250)
     is_open = models.BooleanField(default=False)
     golf_course = models.CharField(max_length=250)
-    entry_fee = models.IntegerField()
     start_date = models.DateField()
     number_of_pools = models.IntegerField()
     par = models.IntegerField()
