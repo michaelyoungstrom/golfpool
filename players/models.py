@@ -22,6 +22,11 @@ class PlayerEvent(models.Model):
     def __str__(self):
         return str(self.tournament) + ' ' + str(self.player)
 
+class Pool(models.Model):
+    pool_id = models.CharField(max_length=1)
+    tournament = models.ForeignKey(Tournament)
+    players = models.ManyToManyField(Player)
+
 class UserEvent(models.Model):
     user = models.ForeignKey(User)
     tournament = models.ForeignKey(Tournament)
