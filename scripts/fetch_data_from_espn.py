@@ -43,7 +43,11 @@ def get_latest_tournament_data(tournament_id):
                 for key in ["PLAYER", "TO PAR", "TODAY", "THRU", "R1", "R2", "R3", "R4"]:
                     table_index = table_value_to_column_dict[key]
                     if table_index is not None:
-                        value = row.contents[table_index].text
+                        if key == "PLAYER":
+                            link_to_player = row.contents[table_index].find("a", class_="leaderboard_player_name").get("href")
+                            value = int(re.findall("\d+", link_to_player)[0])
+                        else:
+                            value = row.contents[table_index].text
                     else:
                         value = ""
                     line_string += ",{}".format(value)

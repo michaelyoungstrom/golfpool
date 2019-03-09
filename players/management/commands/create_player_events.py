@@ -39,42 +39,37 @@ class Command(BaseCommand):
             for row in csv_reader:
                 tournament_id = row[0]
                 player_id = row[1]
-                round_one_total_score = row[2]
-                round_two_total_score = row[3]
-                round_three_total_score = row[4]
-                round_four_total_score = row[5]
-
-                try:
-                    player = Player.objects.get(player_id=player_id)
-                except Player.DoesNotExist:
-                    raise ValueError(
-                        "Player with id: {} not found. Please make sure the first and last name match an entry in the Players database.".format(player_id)
-                    )
+                total_score_to_par = row[2]
+                todays_score_to_par = row[3]
+                holes_played_today = row[4]
+                round_one_total_score = row[5]
+                round_two_total_score = row[6]
+                round_three_total_score = row[7]
+                round_four_total_score = row[8]
 
                 try:
                     tournament = Tournament.objects.get(tournament_id=tournament_id)
                 except Tournament.DoesNotExist:
                     raise ValueError(
-                        "Tournament {} {} not found. Please make sure there exists an entry in Tournaments with the desired name and year".format(tournament_name, tournament_year)
+                        "Tournament with id: {} not found.".format(tournament_id)
                     )
 
-                if int(pool) > tournament.number_of_pools:
+                try:
+                    player = Player.objects.get(player_id=player_id)
+                except Player.DoesNotExist:
                     raise ValueError(
-                        "Invalid pool number {}. Make sure the tournament has a valid number of pools, and that this "
-                        "pool number is within that range.".format(int(pool))
+                        "Player with id: {} not found.".format(player_id)
                     )
 
                 try:
                     player_event = PlayerEvent.objects.get(
                         tournament=tournament,
-                        player=player,
-                        pool=pool
+                        player=player
                     )
                 except PlayerEvent.DoesNotExist:
                     player_event = PlayerEvent(
                         tournament=tournament,
-                        player=player,
-                        pool=pool
+                        player=player
                     )
 
                 par = tournament.par

@@ -14,7 +14,6 @@ class Player(models.Model):
 class PlayerEvent(models.Model):
     tournament = models.ForeignKey(Tournament)
     player = models.ForeignKey(Player)
-    pool = models.IntegerField()
     round_one_to_par = models.IntegerField(default=0, blank=True, null=True)
     round_two_to_par = models.IntegerField(default=0, blank=True, null=True)
     round_three_to_par = models.IntegerField(default=0, blank=True, null=True)
