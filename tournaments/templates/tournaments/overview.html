@@ -42,9 +42,9 @@
 
 {% if tournament.is_open %}
 {% if user_has_entry %}
-    <button class="btn btn-primary" onclick="location.href='{% url 'players:selection' tournament.id %}'" type="button">Edit Entry</button>
+    <button class="btn btn-primary" onclick="location.href='{% url 'players:selection' tournament.tournament_id %}'" type="button">Edit Entry</button>
 {% else %}
-    <button class="btn btn-primary" onclick="location.href='{% url 'players:selection' tournament.id %}'" type="button">Join Now!</button>
+    <button class="btn btn-primary" onclick="location.href='{% url 'players:selection' tournament.tournament_id %}'" type="button">Join Now!</button>
 {% endif %}
 {% endif %}
 

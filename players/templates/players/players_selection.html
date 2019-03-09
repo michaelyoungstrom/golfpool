@@ -10,7 +10,7 @@
 <p><font color="red">{{ player_selection_error }}</font></p>
 {% endif %}
 
-<form method="POST" action="{% url 'players:submit' tournament.id %}">
+<form method="POST" action="{% url 'players:submit' tournament.tournament_id %}">
     {% csrf_token %}
     {% for playerPoolList in player_events_group_list %}
 

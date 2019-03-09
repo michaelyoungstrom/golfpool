@@ -17,10 +17,8 @@
 <br/>
 {% endifchanged %}
 
-<h4><a href="{% url 'tournaments:overview' tournament.id %}">{{ tournament.name }}: {{ tournament.golf_course }}</a></h4>
+<h4><a href="{% url 'tournaments:overview' tournament.tournament_id %}">{{ tournament.name }}: {{ tournament.golf_course }}</a></h4>
 <a>Start Date: {{ tournament.start_date }}</a>
-<br/>
-<a>Entry fee: ${{ tournament.entry_fee }}</a>
 <br/>
 <br/>
 

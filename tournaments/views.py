@@ -8,7 +8,7 @@ def home(request):
     return render(request, 'tournaments/home.html', {'tournaments': tournaments})
 
 def overview(request, pk):
-    tournament = Tournament.objects.get(pk=pk)
+    tournament = Tournament.objects.get(tournament_id=pk)
     user_events = UserEvent.objects.filter(tournament=tournament).order_by('total_score_to_par')
     user_has_entry = False
     try:
