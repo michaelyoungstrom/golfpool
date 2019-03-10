@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .models import Tournament
-from players.models import PlayerEvent, UserEvent
+from players.models import UserEvent
 
 def home(request):
     tournaments = Tournament.objects.order_by('-start_date')

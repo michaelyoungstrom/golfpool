@@ -12,16 +12,16 @@
 
 <form method="POST" action="{% url 'players:submit' tournament.tournament_id %}">
     {% csrf_token %}
-    {% for playerPoolList in player_events_group_list %}
+    {% for pool in pools %}
 
-        <h4>Pool {{ forloop.counter }}</h4>
+        <h4>Pool {{ pool.pool_id }}</h4>
 
-        <select class="custom-select" name="pool_{{ forloop.counter }}">
-            {% for playerEvent in playerPoolList %}
-                {% if playerEvent in user_player_events %}
-                    <option selected value="{{ playerEvent.id }}">{{ playerEvent.player }}</option>
+        <select class="custom-select" name="pool_{{ pool.pool_id }}">
+            {% for player in pool.sorted_players %}
+                {% if player in user_players %}
+                    <option selected value="{{ player.player_id }}">{{ player }}</option>
                 {% else %}
-                    <option value="{{ playerEvent.id }}">{{ playerEvent.player }}</option>
+                    <option value="{{ player.player_id }}">{{ player }}</option>
                 {% endif %}
             {% endfor %}
         </select>

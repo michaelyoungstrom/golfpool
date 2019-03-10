@@ -30,7 +30,7 @@ class Command(BaseCommand):
             # Round isn't complete yet or they missed a cut/withdrew/etc
             return None
 
-        return score - par
+        return total_score_score - par
 
     def handle(self, *args, **options):
         csv_file = options['csv_file']

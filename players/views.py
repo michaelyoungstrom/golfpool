@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from tournaments.models import Tournament
-from players.models import PlayerEvent, UserEvent
+from players.models import Player, UserEvent, Pool
 
 @login_required
 def player_selection(request, tournament_key, player_selection_error=None):
@@ -10,22 +10,20 @@ def player_selection(request, tournament_key, player_selection_error=None):
     users to submit changes.
     """
     tournament = Tournament.objects.get(pk=tournament_key)
-    user_player_events = []
+    user_players = []
     try:
         user_event = UserEvent.objects.get(user=request.user, tournament=tournament)
-        user_player_events = user_event.player_events.all()
+        user_players = user_event.players.all()
     except:
         pass
-    player_events_group_list = []
-    for pool in range(1, tournament.number_of_pools + 1):
-        player_events_group_list.append(PlayerEvent.objects.filter(tournament=tournament, pool=pool))
+    pools = Pool.objects.filter(tournament=tournament_key)
     return render(
         request,
         'players/players_selection.html',
         {
             'tournament': tournament,
-            'player_events_group_list': player_events_group_list,
-            'user_player_events': user_player_events,
+            'pools': pools,
+            'user_players': user_players,
             'player_selection_error': player_selection_error
         }
     )
@@ -40,16 +38,18 @@ def create_or_update_user_event(request, tournament_key, error=None):
     if request.method == 'POST':
         try:
             user_event = UserEvent.objects.get(user=request.user, tournament=tournament)
-            user_event.player_events.clear()
+            user_event.players.clear()
         except:
             user_event = UserEvent(user=request.user, tournament=tournament, total_score_to_par=0)
             user_event.save()
-        for pool in range(1, tournament.number_of_pools + 1):
+        pools = Pool.objects.filter(tournament=tournament)
+        for pool in pools:
             try:
-                player_event_id = int(request.POST['pool_' + str(pool)])
+                player_id = int(request.POST['pool_' + pool.pool_id])
+                player = Player.objects.get(player_id=player_id)
             except:
                 msg = """Error: Missing at least one pool selection. Please make sure you make a
                 selection for each pool and resubmit."""
                 return player_selection(request, tournament_key, msg)
-            user_event.player_events.add(PlayerEvent.objects.get(pk=player_event_id))
-    return redirect('tournaments:overview', pk=tournament.id)
+            user_event.players.add(player)
+    return redirect('tournaments:overview', pk=tournament.tournament_id)
