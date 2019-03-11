@@ -82,16 +82,16 @@ class Command(BaseCommand):
                 round_three_to_par = self.get_relative_score(round_three_total_score, par)
                 round_four_to_par = self.get_relative_score(round_four_total_score, par)
 
-                if round_one_to_par:
+                if round_one_to_par is not None:
                     player_event.round_one_to_par=round_one_to_par
 
-                if round_two_to_par:
+                if round_two_to_par is not None:
                     player_event.round_two_to_par=round_two_to_par
 
-                if round_three_to_par:
+                if round_three_to_par is not None:
                     player_event.round_three_to_par=round_three_to_par
 
-                if round_four_to_par:
+                if round_four_to_par is not None:
                     player_event.round_four_to_par=round_four_to_par
 
                 player_event.save()
