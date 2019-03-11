@@ -99,20 +99,19 @@ class Command(BaseCommand):
             country = player_bio.find("ul", class_="general-info").find("li", class_="first").text
 
             try:
-                existing_player = Player.objects.get(
-                    first_name=first_name,
-                    last_name=last_name,
-                    country=country
+                existing_player = Player.objects.object(
+                    player_id=player_id
                 )
                 print("Golfer with id: {} already exists".format(player_id))
             except:
                 new_player = Player(
+                    player_id=player_id,
                     first_name=first_name,
                     last_name=last_name,
                     country=country
                 )
-                print("{} {} added to the players database".format(first_name, last_name))
                 new_player.save()
+                print("{} {} added to the players database".format(first_name, last_name))
         else:
             raise ValueError(
                 "Could not find a player by id: {}".format(player_id)
@@ -120,14 +119,13 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         datatype = options['datatype']
+        id = options['id']
 
         if datatype == "all_players":
             self.get_all_golfers()
-        else:
-            id = options['id']
-            if datatype == "tournament":
+        elif datatype == "tournament":
                 self.get_latest_tournament_data(id)
-            elif datatype == "player":
-                self.get_golfer_by_id(id)
-            else:
-                raise Exception("Please provide a valid datatype to pull.")
+        elif datatype == "player":
+            self.get_golfer_by_id(id)
+        else:
+            raise Exception("Please provide a valid datatype to pull.")
