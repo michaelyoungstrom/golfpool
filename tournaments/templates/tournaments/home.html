@@ -17,8 +17,10 @@
 <br/>
 {% endifchanged %}
 
-<h4><a href="{% url 'tournaments:overview' tournament.tournament_id %}">{{ tournament.name }}: {{ tournament.golf_course }}</a></h4>
-<a>Start Date: {{ tournament.start_date }}</a>
+<h4><a href="{% url 'tournaments:overview' tournament.tournament_id %}">{{ tournament.name }}</a></h4>
+<a>Begins: {{ tournament.start_date }}</a>
+<br/>
+<a>{{ tournament.golf_course }}</a>
 <br/>
 <br/>
 

@@ -20,7 +20,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('csv_file', help="Relative path to csv file containing player event data")
 
-    def get_round_score(self, total_score, par):
+    def get_relative_score(self, total_score, par):
         """
         Takes in a total score for a round and returns its relative score to par.
         """
@@ -30,7 +30,7 @@ class Command(BaseCommand):
             # Round isn't complete yet or they missed a cut/withdrew/etc
             return None
 
-        return total_score_score - par
+        return total_score_int - par
 
     def handle(self, *args, **options):
         csv_file = options['csv_file']
@@ -71,6 +71,10 @@ class Command(BaseCommand):
                         tournament=tournament,
                         player=player
                     )
+
+                player_event.total_score_to_par = total_score_to_par
+                player_event.todays_score_to_par = todays_score_to_par
+                player_event.holes_played_today = holes_played_today
 
                 par = tournament.par
                 round_one_to_par = self.get_relative_score(round_one_total_score, par)

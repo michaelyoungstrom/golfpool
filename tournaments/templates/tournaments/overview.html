@@ -31,6 +31,8 @@
       <td>{{ user_event.user.last_name }}, {{ user_event.user.first_name }}</td>
       {% if user_event.total_score_to_par == 0 %}
           <td>E</td>
+      {% elif user_event.total_score_to_par > 0 %}
+          <td>+{{ user_event.total_score_to_par }}</td>
       {% else %}
           <td>{{ user_event.total_score_to_par }}</td>
       {% endif %}

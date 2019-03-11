@@ -14,13 +14,13 @@ class Player(models.Model):
 class PlayerEvent(models.Model):
     tournament = models.ForeignKey(Tournament)
     player = models.ForeignKey(Player)
-    total_score_to_par = models.IntegerField(blank=True, null=True)
-    todays_score_to_par = models.IntegerField(blank=True, null=True)
-    holes_played_today = models.IntegerField(blank=True, null=True)
-    round_one_total_score = models.IntegerField(blank=True, null=True)
-    round_two_total_score = models.IntegerField(blank=True, null=True)
-    round_three_total_score = models.IntegerField(blank=True, null=True)
-    round_four_total_score = models.IntegerField(blank=True, null=True)
+    total_score_to_par = models.CharField(max_length=10, blank=True, null=True)
+    todays_score_to_par = models.CharField(max_length=10, blank=True, null=True)
+    holes_played_today = models.CharField(max_length=10, blank=True, null=True)
+    round_one_to_par = models.IntegerField(blank=True, null=True)
+    round_two_to_par = models.IntegerField(blank=True, null=True)
+    round_three_to_par = models.IntegerField(blank=True, null=True)
+    round_four_to_par = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return str(self.tournament) + ' ' + str(self.player)
@@ -29,6 +29,9 @@ class Pool(models.Model):
     pool_id = models.CharField(max_length=1)
     tournament = models.ForeignKey(Tournament)
     players = models.ManyToManyField(Player)
+
+    def __str__(self):
+        return str(self.tournament) + ': Pool ' + self.pool_id
 
     @property
     def sorted_players(self):
@@ -44,3 +47,6 @@ class UserEvent(models.Model):
     round_three_to_par = models.IntegerField(default=0)
     round_four_to_par = models.IntegerField(default=0)
     total_score_to_par = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.tournament) + ': ' + str(self.user)
