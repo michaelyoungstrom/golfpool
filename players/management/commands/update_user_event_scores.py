@@ -1,5 +1,3 @@
-import click
-
 from django.core.management.base import BaseCommand
 from players.models import Player, PlayerEvent, UserEvent
 from tournaments.models import Tournament
