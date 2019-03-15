@@ -11,5 +11,5 @@ each pool (before a tournament begins) to be a part of their team. Once the even
 the lowest **n** scores (where n is a varying number based on the tournament) will be
 added for each tournament round, and the user with the lowest score wins.
 
-Currently, scoring updates are done manually via management commands. But the goal is to
-eventually pull data directly from ESPN.
+Currently, scoring can be updated by running management commands that pull from ESPN's
+website directly.
