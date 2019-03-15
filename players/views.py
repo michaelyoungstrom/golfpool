@@ -16,7 +16,7 @@ def player_selection(request, tournament_key, player_selection_error=None):
         user_players = user_event.players.all()
     except:
         pass
-    pools = Pool.objects.filter(tournament=tournament_key)
+    pools = Pool.objects.filter(tournament=tournament_key).order_by('pool_id')
     return render(
         request,
         'players/players_selection.html',

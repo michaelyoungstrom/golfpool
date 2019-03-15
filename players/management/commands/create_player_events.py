@@ -8,8 +8,8 @@ from tournaments.models import Tournament
 Parses a csv file to add players to player events for a tournament.
 
 Assumes a csv file with the following format (one line):
-    tournament name, tournament year, player first name, player last name, pool number,
-    round one score (optional), round two score (optional), round 3 score (optional), round 4 score (optional)
+    tournament_id, player_id, total_score_to_par, todays_score_to_par, holes_played_today,
+    round_one_total_score, round_two_total_score, round_three_total_score, round_four_total_score
 
 Additionally, this file will update additional values in the csv row if you choose to add score for each round
 """
