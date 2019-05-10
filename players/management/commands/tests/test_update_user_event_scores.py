@@ -11,7 +11,7 @@ class TestUpdateUserEventScores(TestCase):
     @patch('players.management.commands.update_user_event_scores.Command.calculate_round_score', side_effect=[0, -2, 3, -3])
     @patch('players.management.commands.update_user_event_scores.Command.get_max_score_in_round', return_value=10)
     @patch('tournaments.models.Tournament', return_value=Mock())
-    def test_happy_path(self, tournament_mock, max_score_mock, calculate_round_mock):
+    def test_basic_scoring(self, tournament_mock, max_score_mock, calculate_round_mock):
         user_events = MagicMock()
         user_events.__iter__.return_value = [Mock()]
         user_events.order_by.__iter__.return_value = [Mock()]
