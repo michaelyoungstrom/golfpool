@@ -47,7 +47,7 @@ class Command(BaseCommand):
                     table_value_to_column_dict[table_columns[index].text] = index
 
             table_rows = soup.find_all("tr", class_="Table2__tr Table2__even")
-            with io.open("testing.csv", "w") as csv_file:
+            with io.open("espn_data.csv", "w") as csv_file:
                 for row in table_rows:
                     line_string = u"{}".format(tournament_id)
                     for key in ["PLAYER", "TO PAR", "TODAY", "THRU", "R1", "R2", "R3", "R4"]:

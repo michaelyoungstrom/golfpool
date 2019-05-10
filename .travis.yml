@@ -1,0 +1,10 @@
+language: python
+python:
+ - '3.6'
+env:
+ - DJANGO_SETTINGS_MODULE=golfpool.settings
+sudo: false
+install:
+ - pip install -r requirements.txt
+script:
+ - pytest

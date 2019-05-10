@@ -3,3 +3,6 @@ Click==7.0
 Django==1.11
 pytz==2018.4
 requests==2.21.0
+pytest==4.4.2
+pytest-django==3.4.8
+mock==3.0.5
