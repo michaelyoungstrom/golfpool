@@ -35,10 +35,11 @@ class Command(BaseCommand):
             if round_score is not None:
                 total_round_score += round_score
             else:
-                player_total_score_to_par = getattr(player_event, total_score_to_par)
+                player_total_score_to_par = player_event.total_score_to_par
                 try:
                     # If we can get a total score thats an int, the player is still active
-                    int(player_total_score_to_par)
+                    if player_total_score_to_par != "E":
+                        int(player_total_score_to_par)
                 except:
                     # we're hitting players that are no longer playing, add max player score
                     total_round_score += max_player_score
