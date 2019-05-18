@@ -20,7 +20,12 @@ class Command(BaseCommand):
     def get_max_score_in_round(self, tournament, round):
         round_attribute = self.round_dict[round]
         max_player = PlayerEvent.objects.filter(tournament=tournament).order_by("-{}".format(round_attribute))[0]
-        return getattr(max_player, round_attribute)
+        max_player_score = getattr(max_player, round_attribute)
+
+        if max_player_score is None:
+            max_player_score = 0
+
+        return max_player_score
 
     def calculate_round_score(self, players, round, tournament, num_scores_count, max_player_score):
         if round not in self.round_dict:
@@ -32,6 +37,7 @@ class Command(BaseCommand):
         total_round_score = 0
         for player_event in PlayerEvent.objects.filter(tournament=tournament, player__in=players).order_by(F(round_attribute).asc(nulls_last=True))[:num_scores_count]:
             round_score = getattr(player_event, round_attribute)
+
             if round_score is not None:
                 total_round_score += round_score
             else:
